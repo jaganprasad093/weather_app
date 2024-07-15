@@ -15,7 +15,7 @@ class HomescreenController with ChangeNotifier {
     notifyListeners();
 
     Uri url = Uri.parse(
-        "https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=dc4438114971296030da35914a37a8d8");
+        "https://api.openweathermap.org/data/2.5/weather?q=thrissur&appid=dc4438114971296030da35914a37a8d8");
 
     var res = await http.get(url);
     if (res.statusCode == 200) {
@@ -34,9 +34,11 @@ class HomescreenController with ChangeNotifier {
         resmodel?.coord?.lat ?? 1.324324324, resmodel?.coord?.lon ?? 6.9437819);
 
     places = placemarks.first.locality;
-    locality = placemarks.first.country;
+    locality = placemarks.first.administrativeArea;
     log("place---$placemarks");
     notifyListeners();
     return places;
   }
+
+  
 }

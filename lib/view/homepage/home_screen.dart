@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/controller/next_controller.dart';
+import 'package:weather_app/controller/homescreen_controller.dart';
 import 'package:weather_app/core/constants/color_constants.dart';
+import 'package:weather_app/view/homepage/search_screen/search_screen.dart';
 import 'package:weather_app/view/homepage/widget/custom_weather_indicator.dart';
 import 'package:weather_app/view/homepage/widget/custom_weather_widget.dart';
 import 'package:weather_app/view/next_7_days/next_seven_days.dart';
@@ -25,6 +27,7 @@ class _HomePageState extends State<HomePage> {
     final provider = context.watch<HomescreenController>();
     var kelvin = provider.resmodel?.main?.temp?.round();
     var celcus = kelvin! - 273;
+    String datefr = DateFormat("EEE, MMM d").format(DateTime.now());
 
     return Scaffold(
       body: provider.isLoading
@@ -33,9 +36,18 @@ class _HomePageState extends State<HomePage> {
               slivers: [
                 SliverAppBar(
                     backgroundColor: Color(0xFFfdb880),
-                    leading: Icon(
-                      Icons.search,
-                      size: 30,
+                    leading: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SearchScreen(),
+                            ));
+                      },
+                      child: Icon(
+                        Icons.search,
+                        size: 30,
+                      ),
                     ),
                     actions: [
                       Icon(
@@ -65,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500, fontSize: 40),
                               ),
-                              Text("Mon, jan 30",
+                              Text(datefr,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 15,
@@ -80,6 +92,9 @@ class _HomePageState extends State<HomePage> {
                               "assets/images/cludy.png",
                               height: 200,
                               fit: BoxFit.fill,
+                            ),
+                            SizedBox(
+                              width: 10,
                             ),
                             Stack(children: [
                               Container(
