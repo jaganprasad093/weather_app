@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/controller/homescreen_controller.dart';
+import 'package:weather_app/controller/search_controller.dart';
 import 'package:weather_app/core/constants/color_constants.dart';
 import 'package:weather_app/view/homepage/search_screen/search_screen.dart';
 import 'package:weather_app/view/homepage/widget/custom_weather_indicator.dart';
@@ -18,15 +20,23 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    context.read<HomescreenController>().place();
+    initload();
     super.initState();
+  }
+
+  void initload() async {
+    // var provider = context.read<SearchScreenController>();
+    // var current_position = provider.formattedAddress;
+    // await context.read<SearchScreenController>().current_location();
+    // await context.read<SearchScreenController>().getCurrentPosition();
+    // await context.read<SearchScreenController>().addSearch(current_position);
   }
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<HomescreenController>();
-    var kelvin = provider.resmodel?.main?.temp?.round();
-    var celcus = kelvin! - 273;
+    final provider = context.watch<SearchScreenController>();
+    var kelvin = provider.resmodel?.main?.temp?.round() ?? 273;
+    var celcus = kelvin - 273;
     String datefr = DateFormat("EEE, MMM d").format(DateTime.now());
 
     return Scaffold(
@@ -72,8 +82,9 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "${context.read<HomescreenController>().places}," +
-                                    "\n${context.read<HomescreenController>().locality}",
+                                "${provider.resmodel?.name}",
+                                // "${context.read<HomescreenController>().places}," +
+                                //     "\n${context.read<HomescreenController>().locality}",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500, fontSize: 40),
                               ),

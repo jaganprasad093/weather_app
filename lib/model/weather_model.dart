@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final weatherAppModel = weatherAppModelFromJson(jsonString);
+
 import 'dart:convert';
 
 WeatherAppModel weatherAppModelFromJson(String str) =>
@@ -13,6 +17,7 @@ class WeatherAppModel {
   Main? main;
   int? visibility;
   Wind? wind;
+  Rain? rain;
   Clouds? clouds;
   int? dt;
   Sys? sys;
@@ -28,6 +33,7 @@ class WeatherAppModel {
     this.main,
     this.visibility,
     this.wind,
+    this.rain,
     this.clouds,
     this.dt,
     this.sys,
@@ -48,6 +54,7 @@ class WeatherAppModel {
         main: json["main"] == null ? null : Main.fromJson(json["main"]),
         visibility: json["visibility"],
         wind: json["wind"] == null ? null : Wind.fromJson(json["wind"]),
+        rain: json["rain"] == null ? null : Rain.fromJson(json["rain"]),
         clouds: json["clouds"] == null ? null : Clouds.fromJson(json["clouds"]),
         dt: json["dt"],
         sys: json["sys"] == null ? null : Sys.fromJson(json["sys"]),
@@ -66,6 +73,7 @@ class WeatherAppModel {
         "main": main?.toJson(),
         "visibility": visibility,
         "wind": wind?.toJson(),
+        "rain": rain?.toJson(),
         "clouds": clouds?.toJson(),
         "dt": dt,
         "sys": sys?.toJson(),
@@ -156,6 +164,22 @@ class Main {
       };
 }
 
+class Rain {
+  double? the1H;
+
+  Rain({
+    this.the1H,
+  });
+
+  factory Rain.fromJson(Map<String, dynamic> json) => Rain(
+        the1H: json["1h"]?.toDouble(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "1h": the1H,
+      };
+}
+
 class Sys {
   int? type;
   int? id;
@@ -219,23 +243,19 @@ class Weather {
 class Wind {
   double? speed;
   int? deg;
-  double? gust;
 
   Wind({
     this.speed,
     this.deg,
-    this.gust,
   });
 
   factory Wind.fromJson(Map<String, dynamic> json) => Wind(
         speed: json["speed"]?.toDouble(),
         deg: json["deg"],
-        gust: json["gust"]?.toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
         "speed": speed,
         "deg": deg,
-        "gust": gust,
       };
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/controller/homescreen_controller.dart';
+import 'package:weather_app/controller/search_controller.dart';
 import 'package:weather_app/core/constants/color_constants.dart';
 import 'package:weather_app/core/constants/image_constants.dart';
 
@@ -9,7 +9,7 @@ class CustomWeatherWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<HomescreenController>();
+    final provider = context.watch<SearchScreenController>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -37,7 +37,13 @@ class CustomWeatherWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text("" + " cm", style: TextStyle(fontSize: 18))
+                Consumer<SearchScreenController>(
+                  builder: (context, value, child) {
+                    var rain = value.resmodel?.rain?.the1H;
+                    return Text(rain == null ? "-----" : "$rain" + " cm",
+                        style: TextStyle(fontSize: 18));
+                  },
+                )
               ],
             ),
           ),

@@ -12,7 +12,7 @@ class HomescreenController with ChangeNotifier {
   String? locality;
   Future getData() async {
     isLoading = true;
-    notifyListeners();
+    // notifyListeners();
 
     Uri url = Uri.parse(
         "https://api.openweathermap.org/data/2.5/weather?q=thrissur&appid=dc4438114971296030da35914a37a8d8");
@@ -29,16 +29,14 @@ class HomescreenController with ChangeNotifier {
     notifyListeners();
   }
 
-  place() async {
-    List<Placemark> placemarks = await placemarkFromCoordinates(
-        resmodel?.coord?.lat ?? 1.324324324, resmodel?.coord?.lon ?? 6.9437819);
+  // place() async {
+  //   List<Placemark> placemarks = await placemarkFromCoordinates(
+  //       resmodel?.coord?.lat ?? 1.324324324, resmodel?.coord?.lon ?? 6.9437819);
 
-    places = placemarks.first.locality;
-    locality = placemarks.first.administrativeArea;
-    log("place---$placemarks");
-    notifyListeners();
-    return places;
-  }
-
-  
+  //   places = placemarks.first.locality;
+  //   locality = placemarks.first.administrativeArea;
+  //   // log("place---$placemarks");
+  //   notifyListeners();
+  //   return places;
+  // }
 }
